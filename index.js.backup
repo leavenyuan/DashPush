@@ -1,0 +1,30 @@
+const express = require('express')
+const app = express()
+const port = 3000
+const fs = require('fs-extra')
+const bodyParser = require('body-parser')
+
+// create application/json parser
+var jsonParser = bodyParser.json()
+
+// create application/x-www-form-urlencoded parser
+// var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+fs.removeSync('./log');
+fs.mkdirSync('./log')
+
+app.get('/', (req, res) => res.send('Dash push demo has been started.'))
+
+app.post('/', jsonParser, (req, res) => {
+    var body = req.body
+    var captureDate = body.detectInfo.captureDate
+    console.log(captureDate)
+    // With a callback:
+    fs.writeJson('./log/' + captureDate + '.json', body, err => {
+        if (err)
+            return console.error(err)
+        res.send('Dash push demo get post request.')
+    })
+})
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
