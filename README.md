@@ -1,3 +1,8 @@
-#### 执行以下命令
-
+#### Environment Preparation
+```
+npm install
+```
+#### Run
+```
 node index-https.js
+```
