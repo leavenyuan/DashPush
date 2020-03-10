@@ -67,10 +67,16 @@ app.post('/', jsonParser, (req, res) => {
 
     var count = 0
     var body = req.body
-    var eventType = body.eventType
-    var type = body.type
-    var deviceId = body.data.deviceInfo.device.deviceId
-    if (body.data.hasOwnProperty('taskId')) {
+    if (body.hasOwnProperty('eventType')) {
+        var eventType = body.eventType
+    }
+    if (body.hasOwnProperty('type')) {
+        var type = body.type
+    }
+    if (body.data.hasOwnProperty('deviceInfo')) {
+        var deviceId = body.data.deviceInfo.device.deviceId
+    }
+    if (body.data.hasOwnProperty('tastaskInfokId')) {
         var taskId = body.data.taskInfo.task.taskId
     }
     var logPath = './log' + sep + typeMap[type] + sep + eventTypeMap[eventType] + sep + deviceId + sep + taskId
