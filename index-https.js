@@ -51,53 +51,16 @@ function guid() {
 }
 
 app.post('/', jsonParser, (req, res) => {
-    var eventTypeMap = {
-        "1": "白名单比中",
-        "2": "白名单异常",
-        "4": "陌生人",
-        "3": "黑名单告警",
-        "5": "非活体攻击",
-        "6": "密码攻击",
-        "101": "人体抓拍记录",
-        "102": "人体越线告警",
-        "103": "人体区域闯入告警",
-        "104": "车辆违停告警",
-        "105": "车辆抓拍记录",
-        "106": "非机动车抓拍记录",
-    }
-    var typeMap = {
-        "1": "人脸",
-        "2": "结构化"
-    }
 
     var count = 0
     var body = req.body
-    if (body.hasOwnProperty('eventType')) {
-        var eventType = body.eventType
-    }
-    if (body.hasOwnProperty('type')) {
-        var type = body.type
-    }
-    if (body.data.hasOwnProperty('deviceInfo')) {
-        var deviceId = body.data.deviceInfo.device.deviceId
-    }
-    if (body.data.hasOwnProperty('taskInfo') && body.data.taskInfo != null) {
-        var taskId = body.data.taskInfo.task.taskId
-    }
-    var logPath = './log' + sep + typeMap[type] + sep + eventTypeMap[eventType] + sep + deviceId + sep + taskId
+    var logPath = './log' 
     try {
         fs.mkdirSync(logPath, { recursive: true });
     } catch (e) {
         console.log('Cannot create folder ', e);
     }
-    console.log("type:" + typeMap[type] + " eventType:" + eventTypeMap[eventType] + " deviceId: " + deviceId + " taskId:" + taskId)
-    // var taskId = body.taskInfo.task.taskId
-    // var trackId = body.detectInfo.faceInfo.trackId
-    // var objectId = body.objectId
-    // var capturedTime = body.detectInfo.capturedTime
-    // var receivedTime = body.detectInfo.receivedTime
-    // var quality = body.detectInfo.faceInfo.quality
-    // var score = body.detectInfo.score
+    console.log(body)
     var uuid = guid()
     // var fileName = taskId + "|" + trackId + "|" + objectId + "|" + capturedTime + "|" + receivedTime + "|" + quality + "|" + score + "|" + uuid
     var fileName = uuid
