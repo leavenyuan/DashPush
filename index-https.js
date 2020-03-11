@@ -76,7 +76,7 @@ app.post('/', jsonParser, (req, res) => {
     if (body.data.hasOwnProperty('deviceInfo')) {
         var deviceId = body.data.deviceInfo.device.deviceId
     }
-    if (body.data.hasOwnProperty('taskInfo')) {
+    if (body.data.hasOwnProperty('taskInfo') && body.data.taskInfo != null) {
         var taskId = body.data.taskInfo.task.taskId
     }
     var logPath = './log' + sep + typeMap[type] + sep + eventTypeMap[eventType] + sep + deviceId + sep + taskId
