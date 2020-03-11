@@ -7,6 +7,10 @@ const sep = path.sep;
 const http = require('http')
 const https = require('https')
 
+// Reset limit size for request.
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
+
 const privateKey = fs.readFileSync(path.join(__dirname, './certificate/private.pem'), 'utf8');
 const certificate = fs.readFileSync(path.join(__dirname, './certificate/file.crt'), 'utf8');
 const credentials = { key: privateKey, cert: certificate };
@@ -27,6 +31,7 @@ fs.removeSync('./log');
 fs.mkdirSync('./log')
 
 //app.get('/', (req, res) => res.send('Dash push demo has been started.'))
+
 
 app.get('/', function (req, res) {
     if (req.protocol === 'https') {
