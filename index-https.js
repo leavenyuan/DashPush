@@ -47,23 +47,28 @@ function guid() {
     function S4() {
         return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
     }
-    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+    return (S4() + S4() + S4() + S4() +  S4() + S4() + S4());
 }
 
 app.post('/', jsonParser, (req, res) => {
 
     var count = 0
     var body = req.body
-    var logPath = './log' 
+    var msg_id = body.json.msg_id
+    var camera_name = body.json.data.camera_name
+    var device_id = body.json.data.device_id
+    var camera_name = body.json.data.camera_name
+    var trigger = body.json.data.trigger.replace(/\s/g,'')
+    var logPath = './log' + sep + device_id + sep + camera_name 
     try {
         fs.mkdirSync(logPath, { recursive: true });
     } catch (e) {
         console.log('Cannot create folder ', e);
     }
-    console.log(body)
+    //console.log(body)
     var uuid = guid()
-    // var fileName = taskId + "|" + trackId + "|" + objectId + "|" + capturedTime + "|" + receivedTime + "|" + quality + "|" + score + "|" + uuid
-    var fileName = uuid
+    var fileName = msg_id + '-' + camera_name + '-' +  device_id + '-' + trigger + '-' + uuid
+    console.log(fileName)
     count += 1
     // With a callback:
     fs.writeJson(logPath + sep + fileName + '.json', body, err => {
