@@ -30,15 +30,17 @@ const jsonParser = bodyParser.json()
 fs.removeSync('./log');
 fs.mkdirSync('./log')
 
-//app.get('/', (req, res) => res.send('Dash push demo has been started.'))
+app.get('/', (req, res) => res.send('Dash push demo has been started.'))
 
 
 app.get('/', function (req, res) {
     if (req.protocol === 'https') {
         res.status(200).send('This is https visit!');
+        console.log(req.ip);
     }
     else {
         res.status(200).send('This is http visit!');
+        console.log(req.ip);
     }
 });
 
@@ -51,6 +53,7 @@ function guid() {
 }
 
 app.post('/', jsonParser, (req, res) => {
+    console.log(req.ip);
 
     var count = 0
     var body = req.body
