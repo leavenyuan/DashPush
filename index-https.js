@@ -59,6 +59,7 @@ app.post('/', jsonParser, (req, res) => {
     var body = req.body
     var msg_id = body.json.msg_id
     var camera_name = body.json.data.camera_name
+    var snap_id = body.json.data.snap_id
     var device_id = body.json.data.device_id
     var camera_name = body.json.data.camera_name
     var trigger = body.json.data.trigger.replace(/\s/g,'')
@@ -70,7 +71,7 @@ app.post('/', jsonParser, (req, res) => {
     }
     //console.log(body)
     var uuid = guid()
-    var fileName = msg_id + '-' + camera_name + '-' +  device_id + '-' + trigger + '-' + uuid
+    var fileName = msg_id + '-' + camera_name + '-' +  device_id + '-' + trigger + '-' + snap_id + '-' + uuid
     console.log(fileName)
     count += 1
     // With a callback:
