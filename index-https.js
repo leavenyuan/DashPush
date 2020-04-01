@@ -6,6 +6,8 @@ const path = require('path')
 const sep = path.sep;
 const http = require('http')
 const https = require('https')
+const sd = require('silly-datetime');
+const time=sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
 
 // Reset limit size for request.
 app.use(bodyParser.json({limit: "50mb"}));
@@ -71,7 +73,8 @@ app.post('/', jsonParser, (req, res) => {
     }
     //console.log(body)
     var uuid = guid()
-    var fileName = msg_id + '-' + camera_name + '-' +  device_id + '-' + trigger + '-' + snap_id + '-' + uuid
+    var fileName = msg_id + '-' + camera_name + '-' +  device_id + '-' + trigger + '-' + snap_id
+    console.log(time);
     console.log(fileName)
     count += 1
     // With a callback:
