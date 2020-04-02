@@ -55,17 +55,42 @@ function guid() {
 }
 
 app.post('/', jsonParser, (req, res) => {
-    console.log(req.ip);
+    var eventTypeMap = {
+        "1": "白名单比中",
+        "2": "白名单异常",
+        "4": "陌生人",
+        "3": "黑名单告警",
+        "5": "非活体攻击",
+        "6": "密码攻击",
+        "101": "人体抓拍记录",
+        "102": "人体越线告警",
+        "103": "人体区域闯入告警",
+        "104": "车辆违停告警",
+        "105": "车辆抓拍记录",
+        "106": "非机动车抓拍记录",
+    }
+    var typeMap = {
+        "1": "人脸",
+        "2": "结构化"
+    }
 
     var count = 0
     var body = req.body
-    var msg_id = body.json.msg_id
-    var camera_name = body.json.data.camera_name
-    var snap_id = body.json.data.snap_id
-    var device_id = body.json.data.device_id
-    var camera_name = body.json.data.camera_name
-    var trigger = body.json.data.trigger.replace(/\s/g,'')
-    var logPath = './log' + sep + device_id + sep + camera_name 
+    if (body.hasOwnProperty('eventType')) {
+        var eventType = body.eventType
+    }
+    if (body.hasOwnProperty('type')) {
+        var type = body.type
+    }
+    if (body.data.hasOwnProperty('deviceInfo')) {
+        var deviceId = body.data.deviceInfo.device.deviceId
+        var subDeviceId = body.data.deviceInfo.device.subDevice.deviceId
+    }
+    if (body.data.hasOwnProperty('taskInfo') && body.data.taskInfo != null) {
+        var taskId = body.data.taskInfo.task.taskId
+    }
+    var logPath = './log' + sep + typeMap[type] + sep + deviceId + sep + subDeviceId + sep + eventTypeMap[eventType]
+    //write file
     try {
         fs.mkdirSync(logPath, { recursive: true });
     } catch (e) {
@@ -73,9 +98,10 @@ app.post('/', jsonParser, (req, res) => {
     }
     //console.log(body)
     var uuid = guid()
-    var fileName = msg_id + '-' + camera_name + '-' +  device_id + '-' + trigger + '-' + snap_id
+    var fileName = uuid
     console.log(time);
-    console.log(fileName)
+    //console.log(fileName)
+    console.log("type:" + typeMap[type] + " eventType:" + eventTypeMap[eventType] + " deviceId: " + deviceId +  " subDeviceID:" + subDeviceId)
     count += 1
     // With a callback:
     fs.writeJson(logPath + sep + fileName + '.json', body, err => {
