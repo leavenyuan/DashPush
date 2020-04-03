@@ -7,7 +7,6 @@ const sep = path.sep;
 const http = require('http')
 const https = require('https')
 const sd = require('silly-datetime');
-const time=sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
 
 // Reset limit size for request.
 app.use(bodyParser.json({limit: "50mb"}));
@@ -96,9 +95,10 @@ app.post('/', jsonParser, (req, res) => {
     } catch (e) {
         console.log('Cannot create folder ', e);
     }
-    //console.log(body)
+    console.log(body)
     var uuid = guid()
     var fileName = uuid
+    var time=sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
     console.log(time);
     //console.log(fileName)
     console.log("type:" + typeMap[type] + " eventType:" + eventTypeMap[eventType] + " deviceId: " + deviceId +  " subDeviceID:" + subDeviceId)

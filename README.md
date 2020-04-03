@@ -2,22 +2,13 @@
 
 ##### CentOS
 ```
-安装node
-wget https://nodejs.org/dist/v10.16.0/node-v10.16.0.tar.gz
-
-解压
-tar zxvf node-v10.16.0.tar.gz
-
-cd node-v10.16.0
-
-配置
-./configure
-
-编译
-make
-
-安装
-sudo make install
+1. Add node source yum repositry
+curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
+2. Install nodejs and npm
+sudo yum install nodejs
+3. verify
+node -v
+npm -v
 ```
 
 ```
