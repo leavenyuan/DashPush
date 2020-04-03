@@ -1,6 +1,8 @@
 #### Environment Preparation
 
-##### CentOS
+#### Install Nodejs
+
+##### On CentOS
 ```
 安装node
 wget https://nodejs.org/dist/v10.16.0/node-v10.16.0.tar.gz
@@ -20,9 +22,12 @@ make
 sudo make install
 ```
 
+#### Install requirements
+
 ```
 npm install
 ```
+
 #### Run
 ```
 node index-https.js
